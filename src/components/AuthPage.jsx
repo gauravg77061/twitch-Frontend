@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import {BASE_URL }from '../utils/constants';
+import axios from 'axios';
+import {useDispatch} from 'react-redux';
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+
+
 
 const AuthPage = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
@@ -7,10 +14,55 @@ const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const[userName,setUserName] =useState("");
+  const[error,setError]=useState("");
+  const dispatch=useDispatch();
+  const navigate =useNavigate();
 
   const handleSwitchForm = () => {
     setIsLoginForm((prev) => !prev);
   };
+
+const handleSignup =async()=>{
+  console.log('clicked');
+  try {
+      const res=await axios.post(BASE_URL+'api/auth/register',
+    {
+      firstName,lastName,emailId:email,password,userName
+    },
+
+    {withCredentials:true}
+  );
+  console.log(res);
+      dispatch(addUser(res.data));
+
+return navigate("/");
+    
+  } catch (error) {
+    console.log("REGISTER ERROR:", error.response?.data);
+  console.log("STATUS:", error.response?.status);
+  setError(error.response?.data?.message || JSON.stringify(error.response?.data) || "Signup failed");
+  }
+}
+
+  const handleLLogin= async ()=>{
+    console.log("hello world");
+    try {
+        const res= await axios.post(BASE_URL+'api/auth/login',
+          {emailId:email,
+            password
+          },{withCredentials:true}
+        );
+
+        console.log(res?.data);
+        dispatch(addUser(res.data));
+
+return navigate("/");
+        
+
+    } catch (error) {
+      setError(error?.response?.data || "something went wrong ");
+    }
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-base-300 p-4">
@@ -146,7 +198,7 @@ const AuthPage = () => {
           )}
 
           {/* BUTTON */}
-          <button className="btn btn-primary mt-4 w-full text-lg">
+          <button className="btn btn-primary mt-4 w-full text-lg" onClick={isLoginForm ? (handleLLogin) : (handleSignup)}>
             {isLoginForm ? "Login" : "Sign Up"}
           </button>
 

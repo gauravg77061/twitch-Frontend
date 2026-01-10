@@ -6,12 +6,14 @@ import BasePage from './components/BasePage'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import AuthPage from './components/AuthPage'
 import Dashboard from './components/Dashboard'
-
+import { Provider } from 'react-redux'
+import appStore from './utils/appStore'
 function App() {
 
 
   return (
     <>
+        <Provider store={appStore}>
     <BrowserRouter  basename='/'>
 
 <Routes>
@@ -24,6 +26,7 @@ function App() {
 </Routes>
 
     </BrowserRouter>
+    </Provider>
     </>
   )
 }
