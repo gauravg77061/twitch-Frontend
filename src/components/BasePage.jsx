@@ -5,7 +5,7 @@ const BasePage = () => {
     <div>
        <Outlet />
 
-    </div>
+  </div>
   )
 }
 
