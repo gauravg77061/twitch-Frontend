@@ -1,12 +1,12 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import { Outlet } from "react-router-dom";
+
 const BasePage = () => {
   return (
-    <div>
-       <Outlet />
+    <div className="min-h-screen w-screen bg-gray-50">
+      <Outlet />
+    </div>
+  );
+};
 
-  </div>
-  )
-}
-
-export default BasePage
+export default BasePage;
