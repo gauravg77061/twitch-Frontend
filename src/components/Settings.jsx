@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import StreamKey from './StreamKey';
 import SettingsForm from './SettingsForm';
+import PasswordChangeForm from './PasswordChangeForm';
 
 const Settings = () => {
 
@@ -33,7 +34,9 @@ const Settings = () => {
         Channel Settings
       </h1>
 
-      <SettingsForm channel={myChannel}/>
+      <SettingsForm  channel={myChannel}/>
+
+      <PasswordChangeForm className='m-4' />
 
       <StreamKey streamKey={myChannel.streamKey} />
     </div>
