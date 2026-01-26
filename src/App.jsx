@@ -22,7 +22,7 @@ function App() {
               <Route index element={<Channels />} />
               <Route path="channels" element={<Channels />} />
               <Route path="settings" element={<Settings />} />
-              <Route path="channel/:id" element={<ChannelDetails />} />
+              <Route path="channels/:id" element={<ChannelDetails />} />
 
             </Route>
 

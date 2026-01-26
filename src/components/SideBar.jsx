@@ -28,7 +28,7 @@ const SideBar = () => {
           channels.map((channel) => (
             <Link
               key={channel.id}
-              to={`/channel/${channel.id}`}
+              to={`/channels/${channel.id}`}
               className="
                 group flex items-center justify-between
                 rounded-xl px-3 py-2
