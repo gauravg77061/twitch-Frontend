@@ -10,11 +10,11 @@ const Settings = () => {
 
     const user=useSelector((store) => store.user);
 
-    console.log(user);
+    //console.log(user);
 
     const myChannel = channels?.find((ch) => ch.id ===user?.channel);
 
-    console.log("Derived my channel",myChannel);
+   // console.log("Derived my channel",myChannel);
 
     // useEffect(()=>{
     //   console.log("my channel derived",myChannel);

@@ -9,7 +9,19 @@ import { Link } from "react-router-dom";
 
 const SideBar = () => {
 
+  const user=useSelector((store) => store.user);
   const channels =useSelector((store) => store.channels);
+
+  //console.log(user);
+
+  const followedChannelsIds=user?.followedChannels||[];
+  //console.log("followeds channels ids",followedChannelsIds);
+
+  const followedChannels=channels.filter((channel) =>
+  followedChannelsIds.includes(channel.id));
+  //console.log("channels",channels);
+
+  //console.log("Matched channels ",followedChannels);
 
   return (
        <aside className="w-70 shrink-0 h-[calc(100vh-64px)] bg-white border-r border-gray-200 px-4 py-5 overflow-y-auto">
@@ -24,8 +36,8 @@ const SideBar = () => {
 
       {/* Channels */}
       <div className="space-y-1">
-        {channels && channels.length > 0 ? (
-          channels.map((channel) => (
+        {followedChannels && followedChannels.length > 0 ? (
+          followedChannels.map((channel) => (
             <Link
               key={channel.id}
               to={`/channels/${channel.id}`}
