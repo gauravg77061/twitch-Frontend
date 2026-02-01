@@ -23,7 +23,7 @@ const AuthPage = () => {
   };
 
 const handleSignup =async()=>{
-  console.log('clicked');
+  //console.log('clicked');
   try {
       const res=await axios.post(BASE_URL+'api/auth/register',
     {
@@ -32,7 +32,7 @@ const handleSignup =async()=>{
 
     {withCredentials:true}
   );
-  console.log(res);
+ // console.log(res);
       dispatch(addUser(res.data));
 
 setTimeout(() => {
@@ -47,7 +47,7 @@ setTimeout(() => {
 }
 
   const handleLLogin= async ()=>{
-    console.log("hello world");
+    //console.log("hello world");
     try {
         const res= await axios.post(BASE_URL+'api/auth/login',
           {emailId:email,
@@ -55,7 +55,7 @@ setTimeout(() => {
           },{withCredentials:true}
         );
 
-        console.log(res?.data);
+//console.log(res?.data);
         dispatch(addUser(res.data));
 
 return navigate("/");

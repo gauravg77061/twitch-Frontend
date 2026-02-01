@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const ChannelsCard = ({channel}) => {
    const [imgError, setImgError] = useState(false);
-
+//console.log("channels",channel?.id);
    const fallbackAvatar =
     "https://ui-avatars.com/api/?name=" +
     channel?.title +
     "&background=7c3aed&color=fff&bold=true";
 
   return (
+    
        <div
       className="
         bg-white border border-gray-200
@@ -64,9 +66,12 @@ const ChannelsCard = ({channel}) => {
           {channel?.isOnline ? "LIVE" : "OFFLINE"}
         </span>
 
-        <span className="text-xs text-gray-400">
+<Link to={`/channels/${channel?.id}`}
+className='text-xs text-purple-600 font-semibold hover:underline'>
+    
           View Channel →
-        </span>
+        
+        </Link>
       </div>
     </div>
   )

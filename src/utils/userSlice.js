@@ -10,6 +10,13 @@ const userSlice=createSlice({
         },
         removeUser:(state,action)=>{
             return null;
+        },
+
+        addFollowedChannels:(state,action)=>{
+            if(!state.addFollowedChannels){
+                state.addFollowedChannels=[];
+            }
+            state.addFollowedChannels.push(action.payload);
         }
     }
 })
