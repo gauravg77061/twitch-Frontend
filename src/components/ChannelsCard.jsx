@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
 
-const ChannelsCard = ({channel}) => {
-   const [imgError, setImgError] = useState(false);
-//console.log("channels",channel?.id);
-   const fallbackAvatar =
+
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import useStreamStatus from "../hooks/useStreamStatus";
+
+const ChannelsCard = ({ channel }) => {
+  const [imgError, setImgError] = useState(false);
+
+  const fallbackAvatar =
     "https://ui-avatars.com/api/?name=" +
     channel?.title +
     "&background=7c3aed&color=fff&bold=true";
 
+  // ✅ REAL-TIME STREAM STATUS
+  const isLive = useStreamStatus(channel?.streamKey);
+
   return (
-    
-       <div
+    <div
       className="
         bg-white border border-gray-200
         rounded-2xl p-4
@@ -35,10 +40,10 @@ const ChannelsCard = ({channel}) => {
             className="w-full h-full rounded-full object-cover border"
           />
 
-          {/* Live / Offline dot */}
+          {/* 🔴 Live / Offline dot */}
           <span
             className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
-              channel?.isOnline ? "bg-green-500" : "bg-red-500"
+              isLive ? "bg-red-500" : "bg-gray-400"
             }`}
           ></span>
         </div>
@@ -58,23 +63,24 @@ const ChannelsCard = ({channel}) => {
       <div className="flex items-center justify-between">
         <span
           className={`text-xs font-semibold px-3 py-1 rounded-full ${
-            channel?.isOnline
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
+            isLive
+              ? "bg-red-600 text-white"
+              : "bg-gray-200 text-gray-600"
           }`}
         >
-          {channel?.isOnline ? "LIVE" : "OFFLINE"}
+          {isLive ? "🔴 LIVE" : "OFFLINE"}
         </span>
 
-<Link to={`/channels/${channel?.id}`}
-className='text-xs text-purple-600 font-semibold hover:underline'>
-    
+        <Link
+          to={`/channels/${channel?.id}`}
+          className="text-xs text-purple-600 font-semibold hover:underline"
+        >
           View Channel →
-        
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChannelsCard
+export default ChannelsCard;
+

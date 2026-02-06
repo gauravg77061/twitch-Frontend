@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlice";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
@@ -8,7 +8,7 @@ import { BASE_URL } from "../utils/constants";
 const BasePage = () => {
 
   const dispatch=useDispatch();
-
+const navigate=useNavigate();
 const userData=useSelector((store) =>store.user)
 
 //console.log("This is the userData from the store",userData);
@@ -33,7 +33,7 @@ const userData=useSelector((store) =>store.user)
 
   useEffect(()=>{
     fetchUser();
-  },[])
+  },[userData,dispatch])
 
   return (
     <div className="min-h-screen w-screen bg-gray-50">

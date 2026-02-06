@@ -12,15 +12,19 @@ const userSlice=createSlice({
             return null;
         },
 
-        addFollowedChannels:(state,action)=>{
-            if(!state.addFollowedChannels){
-                state.addFollowedChannels=[];
-            }
-            state.addFollowedChannels.push(action.payload);
-        }
+       addFollowedChannel: (state, action) => {
+  if (!state.followedChannels) {
+    state.followedChannels = [];
+  }
+
+  if (!state.followedChannels.includes(action.payload)) {
+    state.followedChannels.push(action.payload);
+  }
+},
+
     }
 })
 
-export const{addUser,removeUser}=userSlice.actions;
+export const{addUser,removeUser,addFollowedChannel}=userSlice.actions;
 
 export default userSlice.reducer;

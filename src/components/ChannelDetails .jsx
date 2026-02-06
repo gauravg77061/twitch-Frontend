@@ -4,8 +4,11 @@ import ChannelDescription from './ChannelDescription';
 import Chat from './Chat';
 import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from '../utils/constants';
-import addFollowedChannel from '../utils/userSlice'
+import useStreamStatus from "../hooks/useStreamStatus";
+
 import axios from 'axios'; 
+import { addFollowedChannel } from '../utils/userSlice';
+import LiveStreamPlayer from './LiveStreamPlayer';
 const ChannelDetails  = () => {
 
     const {id}=useParams();
@@ -16,10 +19,17 @@ const ChannelDetails  = () => {
 //console.log(channels);
     //finding current channel
     const channel=channels.find((ch) => ch.id === id);
+console.log(channel?.streamKey);
+   // const myChannel=channels?.find((ch) => ch.id === user?.channel);
 
-    const isFollowing=user?.followedChannels.includes(channel?.id);
+   // console.log("my channel details",myChannel);
+
+    const isFollowing=user?.followedChannels?.includes(channel?.id);
 
     //console.log(channel?.id);
+
+   const isLive = useStreamStatus(channel?.streamKey);
+
 
  const handleFollow = async () => {
 
@@ -36,6 +46,7 @@ const ChannelDetails  = () => {
 
     console.log("Follow success", res.data);
     dispatch(addFollowedChannel(channel.id));
+   
   } catch (error) {
     console.log("Follow Failed", error.response?.data);
   }
@@ -56,12 +67,23 @@ const ChannelDetails  = () => {
       {/* LEFT SIDE */}
       <div className="flex-1 flex flex-col gap-4">
         {/* Video Placeholder */}
-        <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden flex items-center justify-center">
-          <div className="flex flex-col items-center text-gray-400">
-            <span className="text-lg font-semibold">Channel is offline</span>
-            <span className="text-sm">Stream will start soon</span>
-          </div>
-        </div>
+       <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden">
+  {isLive ? (
+    <LiveStreamPlayer streamKey={channel?.streamKey} />
+  ) : (
+    <div className="flex flex-col items-center justify-center h-full text-gray-400">
+      <span className="text-lg font-semibold">Channel is offline</span>
+      <span className="text-sm">Stream will start soon</span>
+    </div>
+  )}
+
+  {isLive && (
+    <span className="absolute top-3 left-3 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
+      🔴 LIVE
+    </span>
+  )}
+</div>
+
 
         {/* Channel Card */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
@@ -95,7 +117,7 @@ const ChannelDetails  = () => {
             title={channel.title}
             userName={channel.userName}
             description={channel.description}
-            isOnline={channel.isOnline}
+            isOnline={isLive}
             avatarUrl={channel.avatarUrl}
           />
         </div>
